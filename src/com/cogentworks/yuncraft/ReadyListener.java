@@ -1,31 +1,43 @@
 package com.cogentworks.yuncraft;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.events.Event;
+import net.dv8tion.jda.core.events.ReadyEvent;
+import net.dv8tion.jda.core.hooks.EventListener;
 
-import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
+import java.awt.*;
 
-public class ReadyListener extends ListenerAdapter {
+import static org.bukkit.Bukkit.getLogger;
+
+public class ReadyListener implements EventListener {
+
+    JDA jda;
+    Main plugin;
+
+    public ReadyListener(Main plugin) {
+        this.plugin = plugin;
+        jda = Main.jda;
+    }
+
     @Override
-    public void onMessageReceived(MessageReceivedEvent event) {
-        if (event.getMessage().getContentRaw().startsWith("!") && !event.getAuthor().isBot()) {
-            Message message = event.getMessage();
-            String[] args = message.getContentRaw().replaceFirst("!", "").split(" ");
-            MessageChannel channel = event.getChannel();
-
-            switch (args[0]) {
-                case "ping":
-                    channel.sendMessage("Pong!").queue();
-                    break;
-            }
+    public void onEvent(Event event) {
+        if (event instanceof ReadyEvent) {
+            TextChannel channel = jda.getTextChannelById(plugin.getConfig().getLong("channel-id"));
+            if (channel != null)
+                channel.sendMessage(infoEmbed("Yuncraft", "Yuncraft is online!")).queue();
+            else
+                getLogger().info("Could not find channel id " + plugin.getConfig().getString("channel-id"));
         }
+    }
+
+    private static MessageEmbed infoEmbed(String title, String msg) {
+        EmbedBuilder eb = new EmbedBuilder();
+        eb.setTitle(title);
+        eb.setColor(new Color(0x4CAF50));
+        eb.setDescription(msg);
+        return eb.build();
     }
 }

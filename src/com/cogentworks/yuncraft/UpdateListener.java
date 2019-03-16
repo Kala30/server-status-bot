@@ -6,6 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.bukkit.Bukkit.getServer;
 
 public class UpdateListener implements Listener {
@@ -23,6 +25,11 @@ public class UpdateListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerJoinEvent e) {
-        jda.getPresence().setGame(Game.playing(getServer().getOnlinePlayers().size() + "/" + getServer().getMaxPlayers()));
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+            jda.getPresence().setGame(Game.playing(getServer().getOnlinePlayers().size() + "/" + getServer().getMaxPlayers()));
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 }
