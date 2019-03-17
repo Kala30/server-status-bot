@@ -5,9 +5,9 @@ import net.dv8tion.jda.core.entities.Game;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.concurrent.TimeUnit;
-
+import static org.bukkit.Bukkit.getLogger;
 import static org.bukkit.Bukkit.getServer;
 
 public class UpdateListener implements Listener {
@@ -24,12 +24,8 @@ public class UpdateListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerJoinEvent e) {
-        try {
-            TimeUnit.MILLISECONDS.sleep(500);
-            jda.getPresence().setGame(Game.playing(getServer().getOnlinePlayers().size() + "/" + getServer().getMaxPlayers()));
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        getLogger().info("OnPlayerQuit");
+        jda.getPresence().setGame(Game.playing(getServer().getOnlinePlayers().size()-1 + "/" + getServer().getMaxPlayers()));
     }
 }
