@@ -27,7 +27,7 @@ public class ReadyListener implements EventListener {
         if (event instanceof ReadyEvent) {
             TextChannel channel = jda.getTextChannelById(plugin.getConfig().getLong("channel-id"));
             if (channel != null)
-                channel.sendMessage(infoEmbed("Yuncraft", plugin.getConfig().getString("online-msg"))).queue();
+                channel.sendMessage(infoEmbed(plugin.getConfig().getString("title"), plugin.getConfig().getString("online-msg"))).queue();
             else
                 getLogger().info("Could not find channel id " + plugin.getConfig().getString("channel-id"));
         }

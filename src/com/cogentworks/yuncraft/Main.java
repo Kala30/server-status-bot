@@ -44,7 +44,7 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         TextChannel channel = jda.getTextChannelById(getConfig().getLong("channel-id"));
         if (channel != null)
-            channel.sendMessage(offlineEmbed("Yuncraft", getConfig().getString("offline-msg"))).queue();
+            channel.sendMessage(offlineEmbed(getConfig().getString("title"), getConfig().getString("offline-msg"))).queue();
         else
             getLogger().info("Could not find channel id " + getConfig().getString("channel-id"));
     }

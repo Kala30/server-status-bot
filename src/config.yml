@@ -1,4 +1,5 @@
 token: Discord token goes here
 channel-id: 540378874098352138
+title: "Server Status"
 online-msg: "Yuncraft is online!"
-offline-msg: ":crab: YUNCRAFT IS GONE :crab:"
+offline-msg: ":crab: Yuncraft is gone :crab:"
