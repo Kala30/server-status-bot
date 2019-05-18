@@ -1,5 +1,5 @@
-token: Discord token goes here
-channel-id: 540378874098352138
+token: <Discord bot token goes here>
+channel-id: <Channel id to send online/offile msg>
 title: "Server Status"
 online-msg: "Yuncraft is online!"
 offline-msg: ":crab: Yuncraft is gone :crab:"
